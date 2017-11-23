@@ -1,26 +1,17 @@
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Medlem
+public class Medlem implements Serializable
 {
-    public String name;
+    public String navn;
+    public String email;
     public int alder;
-    public String mail;
-    public Kontingent kontingent;
-    public ArrayList<Disciplin> aktiveDiscipliner;
 
-    public Medlem(String name, int alder, String mail, boolean konkurrence)
+    public Medlem(){}
+
+    public Medlem(String navn, String email, int alder)
     {
-        this.name = name;
+        this.navn = navn;
+        this.email = email;
         this.alder = alder;
-        this.mail = mail;
-        this.kontingent = new Kontingent(this.alder);
-
-        //Hvis konkurrence svømmer, lav arrayliste af discipliner
-        if (konkurrence)
-        {
-            this.aktiveDiscipliner = new ArrayList<Disciplin>();
-        }
     }
-
-
 }

@@ -1,4 +1,6 @@
-public class Kontingent
+import java.io.Serializable;
+
+public class Kontingent implements Serializable
 {
     public boolean betaltStatus;
     public boolean aktivStatus;
