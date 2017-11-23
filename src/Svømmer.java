@@ -1,7 +1,6 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Svømmer extends Medlem implements Serializable
+public class Svømmer extends Medlem
 {
 
     public Kontingent kontingent;
@@ -19,12 +18,6 @@ public class Svømmer extends Medlem implements Serializable
         {
             this.aktiveDiscipliner = new ArrayList<Disciplin>();
         }
-    }
-
-    @Override
-    public String toString()
-    {
-        return this.navn + " " + this.alder + " år";
     }
 
 

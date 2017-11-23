@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class Kontingent implements Serializable
+public class Kontingent
 {
     public boolean betaltStatus;
     public boolean aktivStatus;
@@ -12,14 +10,11 @@ public class Kontingent implements Serializable
         this.aktivStatus = true;
 
         //Sætter automatisk beløb ud fra alder
-        if(alder<18)
-        {
+        if (alder < 18) {
             this.beløb = 1000;
-        } else if (alder>=18 && alder<60)
-        {
+        } else if (alder >= 18 && alder < 60) {
             this.beløb = 1600;
-        } else
-        {
+        } else {
             this.beløb = 1200;
         }
     }
