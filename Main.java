@@ -25,7 +25,7 @@ public class Main
         //System.out.println(wuddup.svømmere);
 
         Menu menu = new Menu();
-        menu.menu();
+        menu.menuLogin();
 
 
     }
