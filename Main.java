@@ -17,12 +17,15 @@ public class Main
         wuddup.tilføjSvømmer(kasper, holdListe.hold.get(0));
         wuddup.tilføjSvømmer(matias, holdListe.hold.get(5));
         */
-        FileHandler fh = new FileHandler();
+        //FileHandler fh = new FileHandler();
         //fh.writeSvømmerList(wuddup.svømmere,"hej.txt");
         //System.out.println("Helt sikkert!");
 
-        System.out.println(fh.readSvømmerListe("hej.txt"));
+        //System.out.println(fh.readSvømmerListe("hej.txt"));
         //System.out.println(wuddup.svømmere);
+
+        Menu menu = new Menu();
+        menu.menuLogin();
 
 
     }

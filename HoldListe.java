@@ -16,4 +16,14 @@ public class HoldListe
         this.hold.add(new Hold("Konkurrence Senior","Carsten"));
     }
 
+    public Hold get(String navn)
+    {
+        for (Hold h: hold)
+            {
+                if (h.navn.equalsIgnoreCase(navn))
+                    return h;
+            }
+        return null;
+    }
+
 }

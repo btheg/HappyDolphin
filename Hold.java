@@ -17,5 +17,11 @@ public class Hold
         this.træner = træner;
     }
 
+    @Override
+    public String toString()
+    {
+        return this.navn;
+    }
+
 
 }

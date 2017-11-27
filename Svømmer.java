@@ -24,7 +24,7 @@ public class Svømmer extends Medlem implements Serializable
     @Override
     public String toString()
     {
-        return this.navn + " " + this.alder + " år";
+        return this.navn + " " + this.alder + " år" + "  Mail: " + this.email;
     }
 
 

@@ -14,5 +14,17 @@ public class SvømmerListe
         System.out.println(svømmmer.navn + " tilføjet til " + hold.navn + "!");
     }
 
+    public Svømmer getViaMail(String mail)
+    {
+        for (Svømmer s: svømmere)
+        {
+            if (s.email.equalsIgnoreCase(mail))
+            {
+                return s;
+            }
+        }
+        return null;
+    }
+
 
 }
