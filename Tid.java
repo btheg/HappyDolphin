@@ -1,8 +1,7 @@
 import java.io.Serializable;
 
-public class Tid implements Serializable
+public class Tid implements Serializable, Comparable<Tid>
 {
-
     private Svømmer svømmer;
     private double tid;
     private Disciplin disciplin;
@@ -29,5 +28,17 @@ public class Tid implements Serializable
     public String toString()
     {
         return "\n" + this.svømmer.navn + ": " + this.tid + " sekunder";
+    }
+
+    public int compareTo(Tid tid)
+    {
+        if(this.tid == tid.tid)
+        {
+            return 0;
+        } else if (this.tid > tid.tid)
+        {
+            return 1;
+        }
+        return -1;
     }
 }

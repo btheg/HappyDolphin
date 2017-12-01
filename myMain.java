@@ -1,6 +1,6 @@
-import java.util.Scanner;
 import java.util.Collections;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Scanner;
 
 public class myMain
 {
@@ -52,8 +52,9 @@ public class myMain
         discipliner.init();
         svømmerListe.setSvømmere(fh.readSvømmerListe("svoemmere.txt"));
         holdListe.setHold(fh.readHoldListe("hold.txt"));
-        //rangListeListe.setRangLister(fh.readRangListeListe("Rangliste.txt"));
-        rangListeListe.init();
+        rangListeListe.setRangLister(fh.readRangListeListe("Rangliste.txt"));
+        //rangListeListe.init();
+        //fh.writeRangListeListe(rangListeListe.getRangLister(),"Rangliste.txt");
         Ansat ansat1 = new Ansat("Ole", "mail", 20, "Formand", "123");
         Ansat ansat2 = new Ansat("Gert", "mail", 40, "Kasserer", "123");
         Ansat ansat3 = new Ansat("John", "mail", 55, "Træner", "123");
@@ -543,9 +544,16 @@ public class myMain
                             int choice = scanner.nextInt();
                             if (discipliner.getDiscipliner().get(choice) != null)
                             {
+
+                                Collections.sort(rangListeListe.getViaDisciplin
+                                        (discipliner.getDiscipliner().get(choice)).getTider());
+
                                 System.out.println(rangListeListe.getViaDisciplin
                                                 (discipliner.getDiscipliner().get(choice)).getTider());
                                 disciplinerErPåListen = true;
+                                System.out.println("\n\nTryk enter for at komme videre");
+                                scanner.nextLine();
+                                scanner.nextLine();
                             }
                         } catch (Exception e)
                         {

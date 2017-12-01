@@ -30,7 +30,6 @@ public class RangListeListe implements Serializable
             if (tid.getDisciplin().getType().equalsIgnoreCase(r.getDisciplin().getType()))
             {
                 r.getTider().add(tid);
-                System.out.println("Tid er nu filføjet");
             }
         }
     }
