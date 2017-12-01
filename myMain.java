@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.*;
 
 public class myMain
 {
@@ -7,6 +8,7 @@ public class myMain
     private static DisciplinListe discipliner = new DisciplinListe();
     private static Scanner scanner = new Scanner(System.in);
     private static FileHandler fh = new FileHandler();
+    private static RangListeListe rangListeListe = new RangListeListe();
 
     public static void main(String[] args)
     {
@@ -49,6 +51,7 @@ public class myMain
         discipliner.init();
         svømmerListe.setSvømmere(fh.readSvømmerListe("svoemmere.txt"));
         holdListe.setHold(fh.readHoldListe("hold.txt"));
+        rangListeListe.setRangLister(fh.readRangListeListe("Rangliste.txt"));
         Ansat ansat1 = new Ansat("Ole", "mail", 20, "Formand", "123");
         Ansat ansat2 = new Ansat("Gert", "mail", 40, "Kasserer", "123");
         Ansat ansat3 = new Ansat("John", "mail", 55, "Træner", "123");
@@ -437,6 +440,7 @@ public class myMain
                     "2. Se Konkurrence Svømmere\n" +
                     "3. Se Rangliste\n" +
                     "4. Top 5\n" +
+                    "5. Gem Resultater\n" +
                     "Press any other key to exit");
 
             String valg = scanner.next();
@@ -449,7 +453,6 @@ public class myMain
                     System.out.println(svømmerListe.getViaKonkurrence());
 
                     boolean isMedlem = false;
-                    boolean quit = false;
 
                     // Finder den rigtige svømmer med email
                     System.out.println("\nSkriv mail på personen du vil registrere resultater på\n" +
@@ -459,7 +462,7 @@ public class myMain
                         String email = scanner.nextLine();
                         if (email.toLowerCase().equals("q"))
                         {
-                            quit = true;
+                            isMedlem = true;
                             break;
                         } else if (svømmerListe.getViaMail(email) != null)
                         {
@@ -470,57 +473,44 @@ public class myMain
                                 for (int i = 0; i < discipliner.getDiscipliner().size(); i++)
                                 {
 
-                                    System.out.println(i + ". " + discipliner.getDiscipliner().get(i).getType());
+                                    System.out.println(i + ". " + discipliner.getDiscipliner()
+                                            .get(i).getType());
+
                                 }
+                                System.out.println("\nTryk 'q' for at komme ud til menuen");
                                 try
                                 {
-                                    scanner.nextLine();
-                                    int choice = scanner.nextInt();
-                                    if (discipliner.getDiscipliner().get(choice) != null)
+                                    String choice = scanner.nextLine();
+
+                                    if (choice.equalsIgnoreCase("q"))
+                                {
+                                    disciplinerErPåListen = true;
+                                    break;
+
+                                }
+                                    else if (discipliner.getDiscipliner().get(Integer.parseInt(choice)) != null)
                                     {
-                                        // HER
+                                        System.out.println("Skriv tid for " + svømmerListe.getViaMail(email).navn
+                                                            + " i sekunder (fx 13,5 sekundt)");
+                                        double tidIndskrevet = scanner.nextDouble();
+                                        Tid tid = new Tid(svømmerListe.getViaMail(email),tidIndskrevet,
+                                                discipliner.getDiscipliner().get(Integer.parseInt(choice)));
+                                        rangListeListe.tilføjTid(tid);
+                                        System.out.println(tid.getTid() + " " + tid.getDisciplin().getType());
+                                        System.out.println("\nTryk enter for at komme videre");
+                                        scanner.nextLine();
+                                        scanner.nextLine();
                                     }
                                 } catch (Exception e)
                                 {
                                     System.out.println("Det skal være en disciplin fra listen!");
+                                    scanner.nextLine();
                                 }
                             }
                             break;
                         }
 
                     }
-
-                    /*
-                     boolean isMedlem = false;
-                    scanner.nextLine();
-                    boolean quit = false;
-                    while (!isMedlem)
-                    {
-                        System.out.println("Medlemmer: ");
-                        System.out.println(svømmerListe.getSvømmere());
-                        System.out.println("\nSkriv emailen, på medlemmet du ønsker at slette, \n" +
-                                "eller q for at komme tilbage til menuen");
-                        String mail = scanner.nextLine();
-                        if (mail.toLowerCase().equals("q"))
-                        {
-                            quit = true;
-                            break;
-                        }
-
-                        else if (svømmerListe.getViaMail(mail) != null)
-                        {
-                            holdListe.sletSvømmer(svømmerListe.getViaMail(mail));
-                            svømmerListe.getSvømmere().remove(svømmerListe.getViaMail(mail));
-                            isMedlem = true;
-                        } else
-                        {
-                            System.out.println("Der er ikke noget medlem med den mail");
-                            //scanner.nextLine();
-                        }
-                    }
-                     */
-
-
                     break;
                 case "2":
                     for (int i = 4; i < holdListe.getHold().size(); i++)
@@ -552,6 +542,7 @@ public class myMain
                             if (discipliner.getDiscipliner().get(choice) != null)
                             {
 
+                                Collections.sort(rangListeListe.);
                                 disciplinerErPåListen = true;
                             }
                         } catch (Exception e)
@@ -559,6 +550,13 @@ public class myMain
                             System.out.println("Det skal være en disciplin fra listen!");
                         }
                     }
+                    break;
+                case "5":
+                    fh.writeRangListeListe(rangListeListe.getRangLister(),"Rangliste.txt");
+                    System.out.println("Ranglister er nu gemt");
+                    System.out.println("\n\nTryk enter for at komme videre");
+                    scanner.nextLine();
+                    scanner.nextLine();
                     break;
                 default:
                     isRunningTræner = false;

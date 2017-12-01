@@ -1,4 +1,6 @@
-public class Tid
+import java.io.Serializable;
+
+public class Tid implements Serializable
 {
 
     private Svømmer svømmer;

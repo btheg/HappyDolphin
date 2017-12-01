@@ -1,19 +1,45 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class RangListeListe {
+public class RangListeListe implements Serializable  {
 
-    private ArrayList<RangListe> tider = new ArrayList<>();
+    private ArrayList<RangListe> rangLister = new ArrayList<>();
 
-    public RangListeListe() {}
+    public RangListeListe()
+    {
+        this.init();
+    }
 
     public void tilføjTid(Tid tid){
 
-        for (RangListe r: tider)
+        for (RangListe r: rangLister)
         {
-            if (tid.getDisciplin().equals(r.getDisciplin()))
+            if (tid.getDisciplin().getType().equalsIgnoreCase(r.getDisciplin().getType()))
             {
                 r.getTider().add(tid);
+                System.out.println("Tid er nu filføjet");
             }
         }
+    }
+
+    public void init()
+    {
+        DisciplinListe dl = new DisciplinListe();
+        dl.init();
+        this.rangLister.add(new RangListe(dl.get("crawl")));
+        this.rangLister.add(new RangListe(dl.get("butterfly")));
+        this.rangLister.add(new RangListe(dl.get("rygcrawl")));
+        this.rangLister.add(new RangListe(dl.get("brystsvømning")));
+        this.rangLister.add(new RangListe(dl.get("hundesvømning")));
+    }
+
+    public ArrayList<RangListe> getRangLister()
+    {
+        return rangLister;
+    }
+
+    public void setRangLister(ArrayList<RangListe> rangLister)
+    {
+        this.rangLister = rangLister;
     }
 }

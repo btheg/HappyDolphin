@@ -1,4 +1,6 @@
-public class Disciplin
+import java.io.Serializable;
+
+public class Disciplin implements Serializable
 {
     private String type;
 
