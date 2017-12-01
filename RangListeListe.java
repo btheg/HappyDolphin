@@ -1,13 +1,26 @@
 import java.util.ArrayList;
 import java.io.Serializable;
 
-public class RangListeListe implements Serializable  {
+public class RangListeListe implements Serializable
+{
 
     private ArrayList<RangListe> rangLister = new ArrayList<>();
 
     public RangListeListe()
     {
         this.init();
+    }
+
+    public RangListe getViaDisciplin(Disciplin disciplin)
+    {
+        for (RangListe r: this.rangLister)
+        {
+            if(r.getDisciplin().getType().equals(disciplin.getType()))
+            {
+                return r;
+            }
+        }
+        return null;
     }
 
     public void tilføjTid(Tid tid){

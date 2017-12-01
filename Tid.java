@@ -24,4 +24,10 @@ public class Tid implements Serializable
     public Disciplin getDisciplin() {
         return disciplin;
     }
+
+    @Override
+    public String toString()
+    {
+        return "\n" + this.svømmer.navn + ": " + this.tid + " sekunder";
+    }
 }
