@@ -1,25 +1,58 @@
-/*
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
-// Authors Kasper og Matias
-public class Menu
+public class myMain
 {
-    private SvømmerListe svømmerListe = new SvømmerListe();
-    private HoldListe holdListe = new HoldListe();
-    private DisciplinListe discipliner = new DisciplinListe();
-    private Scanner scanner = new Scanner(System.in);
-    private FileHandler fh = new FileHandler();
+    private static SvømmerListe svømmerListe = new SvømmerListe();
+    private static HoldListe holdListe = new HoldListe();
+    private static DisciplinListe discipliner = new DisciplinListe();
+    private static Scanner scanner = new Scanner(System.in);
+    private static FileHandler fh = new FileHandler();
+    private static RangListeListe rangListeListe = new RangListeListe();
 
-    public Menu()
+    public static void main(String[] args)
     {
+        /*
+        Svømmer martin = new Svømmer("Martin Borup-Larsen","wuddup@gmail.com",21,true);
+        Svømmer mikkel = new Svømmer("Mikkel Olsen","damnson@gmail.com",24,true);
+        Svømmer kasper = new Svømmer("Kasper Lovin","maddafakka@yahoo.dk",17,false);
+        Svømmer matias = new Svømmer("Matias Gramkow","flødetino@gmail.com",62,false);
+        Svømmer jens = new Svømmer("Biker Jens","fløde@gmail.com",65,false);
+        Svømmer densygmike = new Svømmer("Mike","hehe@gmail.com",99,false);
+        Svømmer densygestemike = new Svømmer("Hehe","goodvibes@gmail.com",29,false);
+        SvømmerListe wuddup = new SvømmerListe();
+        HoldListe holdListe = new HoldListe();
+        holdListe.init();
+        RangListeListe rangListeListe = new RangListeListe();
+        rangListeListe.init();
+        wuddup.tilføjSvømmer(martin, holdListe.getHold().get(6));
+        wuddup.tilføjSvømmer(mikkel, holdListe.getHold().get(6));
+        wuddup.tilføjSvømmer(kasper, holdListe.getHold().get(1));
+        wuddup.tilføjSvømmer(matias, holdListe.getHold().get(3));
+        wuddup.tilføjSvømmer(jens, holdListe.getHold().get(2));
+        wuddup.tilføjSvømmer(densygmike, holdListe.getHold().get(2));
+        wuddup.tilføjSvømmer(densygestemike, holdListe.getHold().get(3));
+
+        FileHandler fh = new FileHandler();
+        fh.writeSvømmerList(wuddup.getSvømmere(),"svoemmere.txt");
+        fh.writeHoldList(holdListe.getHold(),"hold.txt");
+        fh.writeRangListeListe(rangListeListe.getRangLister(),"ranglister.txt");
+        System.out.println("Helt sikkert!");
+
+        System.out.println(fh.readHoldListe("hold.txt"));
+        */
+        menuLogin();
     }
 
-
-    public void menuLogin()
+    public static void menuLogin()
     {
         discipliner.init();
         svømmerListe.setSvømmere(fh.readSvømmerListe("svoemmere.txt"));
         holdListe.setHold(fh.readHoldListe("hold.txt"));
+        rangListeListe.setRangLister(fh.readRangListeListe("ranglister.txt"));
+        //rangListeListe.init();
+        //fh.writeRangListeListe(rangListeListe.getRangLister(),"ranglister.txt");
         Ansat ansat1 = new Ansat("Ole", "mail", 20, "Formand", "123");
         Ansat ansat2 = new Ansat("Gert", "mail", 40, "Kasserer", "123");
         Ansat ansat3 = new Ansat("John", "mail", 55, "Træner", "123");
@@ -43,7 +76,7 @@ public class Menu
                 {
                     korrektlogin = true;
                     // Formandens Menu
-                    this.formandMenu();
+                    formandMenu();
 
                 }
             }
@@ -57,7 +90,7 @@ public class Menu
                 {
                     korrektlogin = true;
                     // Kasserer menu
-                    this.kasserMenu();
+                    kasserMenu();
                 }
             }
 
@@ -71,7 +104,7 @@ public class Menu
                 {
                     korrektlogin = true;
                     // Træner menu
-                    this.trænerMenu();
+                    trænerMenu();
                 }
             }
 
@@ -79,12 +112,11 @@ public class Menu
         }
     }
 
-    public void formandMenu()
+    public static void formandMenu()
     {
         boolean isRunningFormand = true;
         while (isRunningFormand)
         {
-
             System.out.println("Menu\n" +
                     "1. Opret Medlem\n" +
                     "2. Rediger Medlemskab\n" +
@@ -111,7 +143,6 @@ public class Menu
                     {
                         try
                         {
-                            //scanner.nextLine();
                             System.out.println("Indtast medlemmets alder");
                             alder = scanner.nextInt();
 
@@ -120,13 +151,13 @@ public class Menu
                             wronginput = false;
                         } catch (Exception e)
                         {
+                            scanner.nextLine();
                             System.out.println("Alderen skal være et heltal, og konkurrence SKAL være true/false");
                         }
                     }
                     boolean rigtigthold = false;
                     Svømmer nytmedlem = new Svømmer(navn, email, alder, konkurrence);
                     boolean holdErIListen = false;
-
 
                     while (!holdErIListen)
                     {
@@ -137,7 +168,7 @@ public class Menu
                             {
                                 if(nytmedlem.getAlder()<18 && holdListe.getHold().get(i).isJunior()||
                                         nytmedlem.getAlder()>=18 && !holdListe.getHold().get(i).isJunior())
-                                System.out.println(i + ". " + holdListe.getHold().get(i).getNavn());
+                                    System.out.println(i + ". " + holdListe.getHold().get(i).getNavn());
                             }
                         }
                         try
@@ -200,8 +231,7 @@ public class Menu
                                         boolean nykonkurrence = scanner.nextBoolean();
                                         rediger.setKonkurrence(nykonkurrence);
                                         wronginput2 = false;
-                                    }
-                                    catch(Exception e)
+                                    } catch(Exception e)
                                     {
                                         System.out.println("Du skal skrive true eller false");
                                         scanner.nextLine();
@@ -293,13 +323,11 @@ public class Menu
                                 } catch (Exception e)
                                 {
                                     System.out.println("Du SKAL skrive true eller false");
-                                } break;
+                                }
+                                break;
                             default:
                                 System.out.println("Du skal skrive 1 eller 2\n");
                         }
-
-
-
                     } else
                     {
                         System.out.println("Der er ikke nogen svømmer med den mail.");
@@ -325,18 +353,16 @@ public class Menu
                             quit = true;
                             break;
                         }
-
-                            else if (svømmerListe.getViaMail(mail) != null)
-                            {
-                                holdListe.sletSvømmer(svømmerListe.getViaMail(mail));
-                                svømmerListe.getSvømmere().remove(svømmerListe.getViaMail(mail));
-                                isMedlem = true;
-                            } else
-                            {
-                                System.out.println("Der er ikke noget medlem med den mail");
-                                //scanner.nextLine();
-                            }
+                        else if (svømmerListe.getViaMail(mail) != null)
+                        {
+                            holdListe.sletSvømmer(svømmerListe.getViaMail(mail));
+                            svømmerListe.getSvømmere().remove(svømmerListe.getViaMail(mail));
+                            isMedlem = true;
+                        } else
+                        {
+                            System.out.println("Der er ikke noget medlem med den mail");
                         }
+                    }
                     if(!quit)
                     {
                         System.out.println("Medlemmet er nu blevet slettet!\n" +
@@ -371,7 +397,7 @@ public class Menu
         }
     }
 
-    public void kasserMenu()
+    public static void kasserMenu()
     {
         boolean isRunning = true;
         while (isRunning)
@@ -379,17 +405,83 @@ public class Menu
             System.out.println("Menu\n" +
                     "1. Rediger Medlemskab\n" +
                     "2. Se betalingsoversigt\n" +
-                    "3. Se Medlemmer\n" +
+                    "3. Gem medlemmer\n" +
                     "Press any other key to exit");
 
             String valg = scanner.next();
             switch (valg)
             {
                 case "1":
+                    System.out.println("Betalende medlemmer: ");
+                    System.out.println(svømmerListe.getBetalt(true));
+                    System.out.println("\n\nMedlemmer i restance: ");
+                    System.out.println(svømmerListe.getBetalt(false));
+                    System.out.println("\nSkriv mailen på det medlem du vil redigere eller q for at komme tilbage til menuen:");
+                    scanner.nextLine();
+                    String mail = scanner.nextLine();
+                    while(svømmerListe.getViaMail(mail)==null)
+                    {
+                        if (mail.equalsIgnoreCase("q"))
+                            break;
+                        System.out.println("Der er ikke noget medlem med den mail, prøv igen:");
+                        mail = scanner.nextLine();
+                    }
+                    if(svømmerListe.getViaMail(mail)!=null)
+                    {
+                        if(svømmerListe.getViaMail(mail).getKontingent().isBetalt())
+                        {
+                            System.out.println(svømmerListe.getViaMail(mail).navn + " er registreret som et betalende medlem." +
+                                    "\nHvis det ikke skal ændres skriv:    true" +
+                                    "\nHvis medlemmet skal sættes i restance skriv:     false");
+                        } else
+                        {
+                            System.out.println(svømmerListe.getViaMail(mail).navn + " er registreret som værende i restance." +
+                                    "\nHvis det ikke skal ændres skriv:    false" +
+                                    "\nHvis medlemmet skal fjernes fra restance skriv:    true");
+                        }
+                        boolean korrektBoolean = false;
+                        while(!korrektBoolean)
+                        {
+                            try
+                            {
+                                boolean betalt = scanner.nextBoolean();
+                                svømmerListe.getViaMail(mail).getKontingent().setBetalt(betalt);
+                                korrektBoolean = true;
+                                if(betalt)
+                                {
+                                    System.out.println("Medlemmet er nu fjernet fra restance");
+                                }
+                                else
+                                {
+                                    System.out.println("Medlemmet er nu sat i restance");
+                                }
+                                System.out.println("\nTryk enter for at komme videre:");
+                                scanner.nextLine();
+                                scanner.nextLine();
+                            } catch (Exception e)
+                            {
+                                System.out.println("Du SKAL skrive true/false");
+                                scanner.nextLine();
+                            }
+                        }
+                    }
                     break;
                 case "2":
+                    System.out.println("Betalende medlemmer: ");
+                    System.out.println(svømmerListe.getBetalt(true));
+                    System.out.println("\n\nMedlemmer i restance: ");
+                    System.out.println(svømmerListe.getBetalt(false));
+                    System.out.println("\n\nTryk enter for at komme videre");
+                    scanner.nextLine();
+                    scanner.nextLine();
                     break;
                 case "3":
+                    fh.writeSvømmerList(svømmerListe.getSvømmere(),"svoemmere.txt");
+                    fh.writeHoldList(holdListe.getHold(),"hold.txt");
+                    System.out.println("Medlemmer og hold er nu gemt.");
+                    System.out.println("\n\nTryk enter for at komme videre");
+                    scanner.nextLine();
+                    scanner.nextLine();
                     break;
                 default:
                     isRunning = false;
@@ -398,7 +490,7 @@ public class Menu
         }
     }
 
-    public void trænerMenu()
+    public static void trænerMenu()
     {
         boolean isRunningTræner = true;
         while (isRunningTræner)
@@ -408,34 +500,93 @@ public class Menu
                     "2. Se Konkurrence Svømmere\n" +
                     "3. Se Rangliste\n" +
                     "4. Top 5\n" +
-                    "Press any other key to exit");
+                    "5. Gem Resultater\n" +
+                    "Tryk på enhver anden knap for at lukke programmet");
 
             String valg = scanner.next();
             switch (valg)
             {
                 case "1":
+
+                    //Viser hvilke svømmere som er konkurrence svømmere
+                    System.out.println("Registrer resultater for disse medlemmer:");
+                    System.out.println(svømmerListe.getKonkurrence());
+
+                    // Finder den rigtige svømmer med email
+                    System.out.println("\nSkriv mail på personen du vil registrere resultater på\n" +
+                            "Eller q for at komme tilbage til menuen");
+                    while (true)
+                    {
+                        String email = scanner.nextLine();
+                        if (email.toLowerCase().equals("q"))
+                        {
+                            break;
+                        }
+                        else if (svømmerListe.getViaMail(email) != null)
+                        {
+                            boolean disciplinerErPåListen1 = false;
+                            while(!disciplinerErPåListen1)
+                            {
+                                System.out.println("Vælg diciplin du vil registrere resultater på:");
+                                for (int i = 0; i < discipliner.getDiscipliner().size(); i++)
+                                {
+
+                                    System.out.println(i + ". " + discipliner.getDiscipliner()
+                                            .get(i).getType());
+
+                                }
+                                System.out.println("\nTryk 'q' for at komme ud til menuen");
+                                try
+                                {
+                                    String choice = scanner.nextLine();
+
+                                    if (choice.equalsIgnoreCase("q"))
+                                    {
+                                        disciplinerErPåListen1 = true;
+                                        break;
+                                    }
+                                    else if (discipliner.getDiscipliner().get(Integer.parseInt(choice)) != null)
+                                    {
+                                        System.out.println("Skriv tid for " + svømmerListe.getViaMail(email).navn
+                                                + " i sekunder (fx 13,5 sekundt)");
+                                        double tidIndskrevet = scanner.nextDouble();
+                                        Tid tid = new Tid(svømmerListe.getViaMail(email),tidIndskrevet,
+                                                discipliner.getDiscipliner().get(Integer.parseInt(choice)));
+                                        rangListeListe.tilføjTid(tid);
+                                        System.out.println(tid.getTid() + " " + tid.getDisciplin().getType() + " er nu registreret");
+
+                                        Collections.sort(rangListeListe.getViaDisciplin
+                                                (discipliner.getDiscipliner().get(Integer.parseInt(choice))).getTider());
+                                        System.out.println("\nTryk enter for at komme videre");
+                                        scanner.nextLine();
+                                        scanner.nextLine();
+                                    }
+                                } catch (Exception e)
+                                {
+                                    System.out.println("Det skal være en disciplin fra listen!");
+                                    scanner.nextLine();
+                                }
+                            }
+                            break;
+                        }
+                    }
                     break;
                 case "2":
                     for (int i = 4; i < holdListe.getHold().size(); i++)
                     {
                         System.out.println(holdListe.getHold().get(i));
-
                     }
                     System.out.println("\nTryk enter for at komme videre");
                     scanner.nextLine();
                     scanner.nextLine();
                     break;
                 case "3":
-                    break;
-                case "4":
-
-                    boolean disciplinerErPåListen = false;
-                    while(!disciplinerErPåListen)
+                    boolean disciplinerErPåListen2 = false;
+                    while(!disciplinerErPåListen2)
                     {
-                        System.out.println("Hvilken diciplin vil du se top 5 af?");
+                        System.out.println("Hvilken diciplin vil du se ranglisten for?");
                         for (int i = 0; i < discipliner.getDiscipliner().size(); i++)
                         {
-
                             System.out.println(i + ". " + discipliner.getDiscipliner().get(i).getType());
                         }
                         try
@@ -444,8 +595,12 @@ public class Menu
                             int choice = scanner.nextInt();
                             if (discipliner.getDiscipliner().get(choice) != null)
                             {
-
-                                disciplinerErPåListen = true;
+                                System.out.println(rangListeListe.getViaDisciplin
+                                        (discipliner.getDiscipliner().get(choice)).getTider());
+                                disciplinerErPåListen2 = true;
+                                System.out.println("\n\nTryk enter for at komme videre");
+                                scanner.nextLine();
+                                scanner.nextLine();
                             }
                         } catch (Exception e)
                         {
@@ -453,10 +608,60 @@ public class Menu
                         }
                     }
                     break;
+                case "4":
+                    boolean disciplinerErPåListen = false;
+                    while(!disciplinerErPåListen)
+                    {
+                        System.out.println("Hvilken diciplin vil du se top 5 af?");
+                        for (int i = 0; i < discipliner.getDiscipliner().size(); i++)
+                        {
+                            System.out.println(i + ". " + discipliner.getDiscipliner().get(i).getType());
+                        }
+                        try
+                        {
+                            scanner.nextLine();
+                            int choice = scanner.nextInt();
+                            if (discipliner.getDiscipliner().get(choice) != null)
+                            {
+                                ArrayList<Tid> top5 = new ArrayList<>();
+                                top5.addAll(rangListeListe.getViaDisciplin
+                                        (discipliner.getDiscipliner().get(choice)).getTider());
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    String name = top5.get(i).getSvømmer().navn;
+                                    for (int j = i+1; j < top5.size(); j++)
+                                    {
+                                        if(top5.get(j).getSvømmer().navn.equals(name))
+                                        {
+                                            top5.remove(j);
+                                        }
+                                    }
+                                }
+
+                                System.out.println(top5);
+
+                                disciplinerErPåListen = true;
+                                System.out.println("\n\nTryk enter for at komme videre");
+                                scanner.nextLine();
+                                //scanner.nextLine();
+                            }
+                        } catch (Exception e)
+                        {
+                            System.out.println("Det skal være en disciplin fra listen!");
+                        }
+                    }
+                    break;
+                case "5":
+                    fh.writeRangListeListe(rangListeListe.getRangLister(),"ranglister.txt");
+                    System.out.println("Ranglister er nu gemt");
+                    System.out.println("\n\nTryk enter for at komme videre");
+                    scanner.nextLine();
+                    scanner.nextLine();
+                    break;
                 default:
                     isRunningTræner = false;
                     break;
             }
         }
     }
-}*/
+}

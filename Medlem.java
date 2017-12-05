@@ -2,11 +2,16 @@ import java.io.Serializable;
 
 public class Medlem implements Serializable
 {
-    public String navn;
-    public String email;
-    public int alder;
+    protected String navn;
+    protected String email;
+    protected int alder;
 
     public Medlem(){}
+
+    public int getAlder()
+    {
+        return alder;
+    }
 
     public Medlem(String navn, String email, int alder)
     {

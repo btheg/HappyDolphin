@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class DisciplinListe
 {
-    public ArrayList<Disciplin> discipliner = new ArrayList<>();
+    private ArrayList<Disciplin> discipliner = new ArrayList<>();
 
     public DisciplinListe() {}
 
@@ -10,12 +10,11 @@ public class DisciplinListe
     {
         for (Disciplin d: discipliner)
         {
-            if (d.type.equalsIgnoreCase(type))
+            if (d.getType().equalsIgnoreCase(type))
                 return d;
         }
         return null;
     }
-
 
     public void init()
     {
@@ -26,4 +25,8 @@ public class DisciplinListe
         this.discipliner.add(new Disciplin("Hundesvømning"));
     }
 
+    public ArrayList<Disciplin> getDiscipliner()
+    {
+        return discipliner;
+    }
 }
